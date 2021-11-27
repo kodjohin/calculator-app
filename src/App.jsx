@@ -7,7 +7,7 @@ import CalcGrid from './components/CalcGrid'
 const StyledApp = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 `
 

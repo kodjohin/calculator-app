@@ -10,7 +10,7 @@ const StyledFlexGrid = styled.div`
     align-items: center;
     gap: 20px;
 `
-const StyledInput = styled.input`
+const StyledOutput = styled.div`
     width: 310px;
     min-height: 80px;
     font-size: 32px;
@@ -19,10 +19,11 @@ const StyledInput = styled.input`
     text-align: right;
     padding: 10px;
     color: var(--white);
-    
-    &::placeholder {
-        color: var(--white);
-    }
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    word-wrap:break-word;
+    word-break: break-all;
 `
 
 const StyledGrid = styled.div`
@@ -40,7 +41,7 @@ const StyledGrid = styled.div`
 const CalcGrid = () => {
     return (
         <StyledFlexGrid>
-            <StyledInput type="text" type="number" placeholder="0"/>
+            <StyledOutput>399,981</StyledOutput>
             <StyledGrid>
                 <Button label="7"/>
                 <Button label="8"/>
