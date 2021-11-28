@@ -15,10 +15,10 @@ const StyledOutput = styled.div`
     min-height: 80px;
     font-size: 32px;
     border-radius: 10px;
-    background-color: var(--very-dark-desaturated-blue);
+    background-color: ${props => props.theme.textInputBackground};
     text-align: right;
     padding: 10px;
-    color: var(--white);
+    color: ${props => props.theme.headerFont};
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -34,7 +34,7 @@ const StyledGrid = styled.div`
     grid-template-columns: repeat(4, 60px);
     grid-template-rows: repeat(5, 60px);
     gap: 15px 10px;
-    background-color: var(--dark-desaturated-blue);
+    background-color: ${props => props.theme.padBackground};
     padding: 20px;
     border-radius: 10px;
 `

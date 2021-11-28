@@ -10,13 +10,14 @@ const StyledHeader = styled.div`
     align-items: center;
     font-size: 1.5rem;
     margin-bottom: 30px;
+    color: ${(props => props.theme.headerFont)};
 `
 
-const Header = () => {
+const Header = ({onThemeChange}) => {
     return (
         <StyledHeader>
             <h2>calc</h2>
-            <ThemeSelector/>
+            <ThemeSelector onThemeChange={onThemeChange}/>
         </StyledHeader>
     )
 }
