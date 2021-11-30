@@ -1,69 +1,216 @@
-import React from 'react'
-import styled from 'styled-components'
-import Button from './Button'
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import Button from "./Button";
 
 const StyledFlexGrid = styled.div`
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-`
+	min-width: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+`;
 const StyledOutput = styled.div`
-    width: 310px;
-    min-height: 80px;
-    font-size: 32px;
-    border-radius: 10px;
-    background-color: ${props => props.theme.textInputBackground};
-    text-align: right;
-    padding: 10px;
-    color: ${props => props.theme.headerFont};
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    word-wrap:break-word;
-    word-break: break-all;
-`
-
+	width: 310px;
+	min-height: 80px;
+	font-size: 32px;
+	border-radius: 10px;
+	background-color: ${(props) => props.theme.textInputBackground};
+	text-align: right;
+	padding: 10px;
+	color: ${(props) => props.theme.headerFont};
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	word-wrap: break-word;
+	word-break: break-all;
+`;
 const StyledGrid = styled.div`
-    min-width: 300px;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: repeat(4, 60px);
-    grid-template-rows: repeat(5, 60px);
-    gap: 15px 10px;
-    background-color: ${props => props.theme.padBackground};
-    padding: 20px;
-    border-radius: 10px;
-`
+	min-width: 300px;
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	grid-template-columns: repeat(4, 60px);
+	grid-template-rows: repeat(5, 60px);
+	gap: 15px 10px;
+	background-color: ${(props) => props.theme.padBackground};
+	padding: 20px;
+	border-radius: 10px;
+`;
 const CalcGrid = () => {
-    return (
-        <StyledFlexGrid>
-            <StyledOutput>399,981</StyledOutput>
-            <StyledGrid>
-                <Button label="7"/>
-                <Button label="8"/>
-                <Button label="9"/>
-                <Button classe="desaturated"label="DEL"/>
-                <Button label="4"/>
-                <Button label="5"/>
-                <Button label="6"/>
-                <Button label="+"/>
-                <Button label="1"/>
-                <Button label="2"/>
-                <Button label="3"/>
-                <Button label="-"/>
-                <Button label="."/>
-                <Button label="0"/>
-                <Button label="/"/>
-                <Button label="x"/>
-                <Button classe="span-two desaturated" label="RESET"/>
-                <Button classe="span-two red" label="="/>
-            </StyledGrid>
-        </StyledFlexGrid>
-    )
-}
+	const [previousOperand, setPreviousOperand] = useState("");
+	const [currentOperand, setCurrentOperand] = useState("");
+	const [operation, setOperation] = useState(undefined);
 
-export default CalcGrid
+	const buttonsData = [
+		{
+			label: "7",
+			type: "data-number",
+		},
+		{
+			label: "8",
+			type: "data-number",
+		},
+		{
+			label: "9",
+			type: "data-number",
+		},
+		{
+			label: "DEL",
+			type: "data-delete",
+			classe: "desaturated",
+		},
+		{
+			label: "4",
+			type: "data-number",
+		},
+		{
+			label: "5",
+			type: "data-number",
+		},
+		{
+			label: "6",
+			type: "data-number",
+		},
+		{
+			label: "+",
+			type: "data-operation",
+		},
+		{
+			label: "1",
+			type: "data-number",
+		},
+		{
+			label: "2",
+			type: "data-number",
+		},
+		{
+			label: "3",
+			type: "data-number",
+		},
+		{
+			label: "-",
+			type: "data-operation",
+		},
+		{
+			label: ".",
+			type: "data-number",
+		},
+		{
+			label: "0",
+			type: "data-number",
+		},
+		{
+			label: "/",
+			type: "data-operation",
+		},
+		{
+			label: "*",
+			type: "data-operation",
+		},
+		{
+			label: "RESET",
+			type: "data-reset",
+			classe: "span-two desaturated",
+		},
+		{
+			label: "=",
+			type: "data-equal",
+			classe: "span-two red",
+		},
+	];
+
+	const onClickHandler = (e) => {
+		// console.log(` onClickHandler:`, e.target.attributes["type"].value);
+		const number = e.target.outerText;
+		if (e.target.attributes["type"].value === "data-number")
+			appendNumber(number);
+		if (e.target.attributes["type"].value === "data-reset") reset();
+		if (e.target.attributes["type"].value === "data-delete") del();
+		if (e.target.attributes["type"].value === "data-operation")
+			chooseOperation(e.target.outerText);
+		if (e.target.attributes["type"].value === "data-equal") compute();
+	};
+
+	const reset = () => {
+		// console.log(`%c Reset Call!`, "color: red; font-size:20px");
+		setPreviousOperand("");
+		setCurrentOperand("");
+		setOperation(undefined);
+	};
+
+	const del = () => {
+		setCurrentOperand(currentOperand.toString().slice(0, -1));
+	};
+
+	const chooseOperation = (operation) => {
+		if (currentOperand === "") return;
+		if (previousOperand !== "") {
+			compute();
+		}
+		setOperation(operation);
+		setPreviousOperand(currentOperand);
+		setCurrentOperand("");
+	};
+
+	const compute = () => {
+		let computation;
+		const prev = parseFloat(previousOperand);
+		const current = parseFloat(currentOperand);
+		if (isNaN(prev) || isNaN(current)) return;
+
+		switch (operation) {
+			case "+":
+				computation = prev + current;
+				break;
+			case "-":
+				computation = prev - current;
+				break;
+			case "*":
+				computation = prev * current;
+				break;
+			case "/":
+				computation = prev / current;
+				break;
+			default:
+				break;
+		}
+		setCurrentOperand(computation);
+		setOperation(undefined);
+		setPreviousOperand("");
+	};
+
+	useEffect(() => {
+		reset();
+	}, []);
+
+	const appendNumber = (number) => {
+		if (number === "." && currentOperand.includes(".")) return;
+		setCurrentOperand(currentOperand.toString() + number.toString());
+	};
+
+	return (
+		<StyledFlexGrid>
+			<StyledOutput>
+				<label type="text">
+					{operation != null
+						? `${currentOperand} ${operation}`
+						: currentOperand}
+				</label>
+			</StyledOutput>
+			<StyledGrid>
+				{buttonsData.map((button, index) => (
+					<Button
+						key={index}
+						classe={button.classe}
+						label={button.label}
+						type={button.type}
+						onClick={onClickHandler}
+					/>
+				))}
+			</StyledGrid>
+		</StyledFlexGrid>
+	);
+};
+
+export default CalcGrid;

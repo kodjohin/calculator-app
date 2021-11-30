@@ -6,6 +6,9 @@ This is a solution to the [Calculator app challenge on Frontend Mentor](https://
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
+    - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
 
 
 ## Overview
@@ -18,3 +21,18 @@ Users should be able to:
 - Perform mathmatical operations like addition, subtraction, multiplication, and division
 - Adjust the color theme based on their preference
 - **Bonus**: Have their initial theme preference checked using `prefers-color-scheme` and have any additional changes saved in the browser
+
+### Links
+
+
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [React](https://reactjs.org/) - JS library
+- [Styled Components](https://styled-components.com/) - For styles
