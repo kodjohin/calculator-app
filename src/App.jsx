@@ -15,8 +15,8 @@ const StyledApp = styled.div`
 
 const App = () => {
 	//#region ================ Manage themes ==================================================
-	const [theme, setTheme] = useState(() =>
-		JSON.parse(localStorage.getItem("prefers-color-scheme")) || themeOne
+	const [theme, setTheme] = useState(
+		() => JSON.parse(localStorage.getItem("prefers-color-scheme")) || themeOne
 	);
 	const onThemeChanged = (value) => {
 		// console.log(value);

@@ -121,33 +121,25 @@ const CalcGrid = () => {
 	];
 
 	const onClickHandler = (e) => {
-		// console.log(` onClickHandler:`, e.target.attributes["type"].value);
-		const number = e.target.outerText;
-		if (e.target.attributes["type"].value === "data-number")
-			appendNumber(number);
-		if (e.target.attributes["type"].value === "data-reset") reset();
-		if (e.target.attributes["type"].value === "data-delete") del();
-		if (e.target.attributes["type"].value === "data-operation")
-			chooseOperation(e.target.outerText);
-		if (e.target.attributes["type"].value === "data-equal") compute();
+		const dataType = e.target.attributes["type"].value;
+		dataType === "data-number" && appendNumber(e.target.outerText);
+		dataType === "data-reset" && reset();
+		dataType === "data-delete" && del();
+		dataType === "data-operation" && chooseOperation(e.target.outerText);
+		dataType === "data-equal" && compute();
 	};
 
 	const reset = () => {
-		// console.log(`%c Reset Call!`, "color: red; font-size:20px");
 		setPreviousOperand("");
 		setCurrentOperand("");
 		setOperation(undefined);
 	};
 
-	const del = () => {
-		setCurrentOperand(currentOperand.toString().slice(0, -1));
-	};
+	const del = () => setCurrentOperand(currentOperand.toString().slice(0, -1));
 
 	const chooseOperation = (operation) => {
 		if (currentOperand === "") return;
-		if (previousOperand !== "") {
-			compute();
-		}
+		previousOperand !== "" && compute();
 		setOperation(operation);
 		setPreviousOperand(currentOperand);
 		setCurrentOperand("");
