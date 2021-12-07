@@ -24,6 +24,8 @@ Users should be able to:
 
 ### Links
 
+- Solution URL: [solution URL here](https://github.com/kodjohin/calculator-app/)
+- Live Site URL: [live site URL here](https://kodjohin.github.io/calculator-app/)
 
 ## My process
 
